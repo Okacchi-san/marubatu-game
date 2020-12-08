@@ -3,8 +3,8 @@
     <h1>マルバツゲーム App</h1>
 
       <table id="table">
-        <tr v-for="(row,rowsIndex) in states">
-          <td v-for="(state,colsIndex) in row" @click="onSelect(rowsIndex,colsIndex)">
+        <tr v-for="(row,rowsIndex) in states" :key="rowsIndex">
+          <td v-for="(state,colsIndex) in row" :key="colsIndex" @click="onSelect(rowsIndex,colsIndex)">
             <div style="color:#f00;" v-if="state==1">○</div>
             <div style="color:#00f;" v-if="state==2">×</div>
           </td>
@@ -23,9 +23,9 @@ export default{
   data: function() {
     return {
       states: [
-        [2,2,2],
         [-1,-1,-1],
-        [1,1,1]
+        [-1,-1,-1],
+        [-1,-1,-1]
         ],
       playerId: 1  
     }
@@ -35,11 +35,19 @@ export default{
       if(this.states[rowsIndex][colsIndex] != -1) {
         alert('そのマスは、すでに選択されています!');
       }else{
-        let status = JSON.parse(JSON.stringify(this.states))
+        let states = JSON.parse(JSON.stringify(this.states))
         states[rowsIndex][colsIndex] = this.playerId;
         this.states = states;
         this.playerId = (this.playerId == 1) ? 2 : 1;
       }
+    }
+  },
+  created(){
+    console.log(this.states)
+  },
+  watch:{
+    states(newStates, oldStates){
+      console.log(newStates, oldStates)
     }
   }
 };
