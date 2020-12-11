@@ -54,6 +54,50 @@ export default{
           alert(this.playerIds[winnerId] + 'さんの勝ちです。おめでとうございます。!');
         }
       }
+    },
+    getWinnerId: function() {
+      for(let i = 0; i < 3; i++) {
+        //横の列
+        let row = this.states[i];
+        if(this.isStatesFilled(row)) {
+          return row[0];
+        }
+        //縦の列
+        let col = [
+          this.states[0][i],
+          this.states[1][i],
+          this.states[2][i]
+        ];
+        if(this.isStatesFilled(col)) {
+          return this.states[0][i];
+        }
+      }
+      //ななめ
+      let skew1 = [
+        this.states[0][0],
+        this.states[1][1],
+        this.states[2][2]
+      ];
+      if(this.isStatesFilled(skew1)) {
+        return this.states[0][0];
+      }
+
+      let skew2 = [
+        this.states[0][2],
+        this.states[1][1],
+        this.states[2][2]
+      ];
+      if(this.isStatesFilled(skew2)) {
+        return this.states[0][2];
+      }
+      return -1;
+    },
+    isStatesFilled: function(states) {
+      return(
+        states[0] != -1 &&
+        states[0] == states[1] &&
+        states[1] == states[2]
+      );
     }
   },
   created(){
