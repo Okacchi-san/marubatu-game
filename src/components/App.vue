@@ -23,11 +23,11 @@ export default{
   data: function() {
     return {
       states: [
-        [-1,-1,-1],
-        [-1,-1,-1],
-        [-1,-1,-1]
+        [-1,-1,-1], //rowの1つ目 配列の中の配列はループ 処理2回で取り出せる
+        [-1,-1,-1], //rowの2つ目
+        [-1,-1,-1] //rowの3つ目
         ],
-      playerId: 1  
+      playerId: 1
     }
   },
   methods: {
@@ -35,19 +35,36 @@ export default{
       if(this.states[rowsIndex][colsIndex] != -1) {
         alert('そのマスは、すでに選択されています!');
       }else{
-        let states = JSON.parse(JSON.stringify(this.states))
-        states[rowsIndex][colsIndex] = this.playerId;
+        let states = JSON.parse(JSON.stringify(this.states)) //JSON.stringfy() エンコード（JS→JSON）　JSON.parse デコード（JSON→JS）
+        states[rowsIndex][colsIndex] = this.playerId; //playerID
         this.states = states;
         this.playerId = (this.playerId == 1) ? 2 : 1;
+
+        let winnerId = this.getWinnerId();
+        if(winnerId != -1) {
+          this.states = [
+            [-1,-1,-1],
+            [-1,-1,-1],
+            [-1,-1,-1]
+          ];
+          this.playerIds = {
+            1:'○',
+            2:'×'
+          };
+          alert(this.playerIds[winnerId] + 'さんの勝ちです。おめでとうございます。!');
+        }
       }
     }
   },
   created(){
-    console.log(this.states)
+    console.log(this.states,this.playerId)
   },
   watch:{
     states(newStates, oldStates){
       console.log(newStates, oldStates)
+    },
+    playerId(newPkayerID, oldPlayerId){
+      console.log(`現在のプレーヤーは${newPkayerID}の人です。一つ前は ${oldPlayerId}の人です。`)
     }
   }
 };
