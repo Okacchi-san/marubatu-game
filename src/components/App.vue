@@ -32,15 +32,21 @@ export default{
   },
   methods: {
     onSelect: function(rowsIndex, colsIndex) {
+      // 選択済みかどうか
       if(this.states[rowsIndex][colsIndex] != -1) {
         alert('そのマスは、すでに選択されています!');
       }else{
+        // 選択されてないとき
         let states = JSON.parse(JSON.stringify(this.states)) //JSON.stringfy() エンコード（JS→JSON）　JSON.parse デコード（JSON→JS）
         states[rowsIndex][colsIndex] = this.playerId; //playerID
         this.states = states;
-        this.playerId = (this.playerId == 1) ? 2 : 1;
+        this.playerId = (this.playerId == 1) ? 2 : 1; // プレイヤー交代処理
 
+        // これ何？
+        //
         let winnerId = this.getWinnerId();
+
+        // 勝利条件
         if(winnerId != -1) {
           this.states = [
             [-1,-1,-1],
@@ -93,11 +99,21 @@ export default{
       return -1;
     },
     isStatesFilled: function(states) {
-      return(
-        states[0] != -1 &&
-        states[0] == states[1] &&
-        states[1] == states[2]
-      );
+      if (states[0] == -1) {
+        return false;
+      }
+
+      if (states[0] != states[1]) {
+        return false
+      }
+
+      if (states[1] != states[2]) {
+        return false
+      }
+
+      return true;
+
+      // return(states[0] != -1 && states[0] == states[1] && states[1] == states[2]);
     }
   },
   created(){
