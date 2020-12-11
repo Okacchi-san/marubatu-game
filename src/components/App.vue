@@ -85,7 +85,7 @@ export default{
       let skew2 = [
         this.states[0][2],
         this.states[1][1],
-        this.states[2][2]
+        this.states[2][0]
       ];
       if(this.isStatesFilled(skew2)) {
         return this.states[0][2];
