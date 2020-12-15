@@ -22,11 +22,7 @@
 export default{
   data: function() {
     return {
-      states: [
-        [-1,-1,-1], //rowの1つ目 配列の中の配列はループ 処理2回で取り出せる
-        [-1,-1,-1], //rowの2つ目
-        [-1,-1,-1] //rowの3つ目
-        ],
+      states: [],
       playerId: 1
     }
   },
@@ -144,6 +140,9 @@ export default{
     playerId(newPkayerID, oldPlayerId){
       console.log(`現在のプレーヤーは${newPkayerID}の人です。一つ前は ${oldPlayerId}の人です。`)
     }
+  },
+  mounted: function() {
+    this.init();
   }
 };
 </script>
