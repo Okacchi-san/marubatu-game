@@ -31,6 +31,13 @@ export default{
     }
   },
   methods: {
+    init: function() {
+      this.states = [
+        [-1,-1,-1],
+        [-1,-1,-1],
+        [-1,-1,-1]
+      ];
+    },
     onSelect: function(rowsIndex, colsIndex) {
       // 選択済みかどうか
       if(this.states[rowsIndex][colsIndex] != -1) {
@@ -48,22 +55,14 @@ export default{
 
         // 勝利条件
         if(winnerId != -1) {
-          this.states = [
-            [-1,-1,-1],
-            [-1,-1,-1],
-            [-1,-1,-1]
-          ];
+          this.init();
           this.playerIds = {
             1:'○',
             2:'×'
           };
           alert(this.playerIds[winnerId] + 'さんの勝ちです。おめでとうございます。!');
         } else if(this.isDraw()) {
-          this.states = [
-            [-1,-1,-1],
-            [-1,-1,-1],
-            [-1,-1,-1]
-          ];
+          this.init();
           alert('引き分けです！')
         }
       }
