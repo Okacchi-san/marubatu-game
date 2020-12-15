@@ -58,6 +58,13 @@ export default{
             2:'×'
           };
           alert(this.playerIds[winnerId] + 'さんの勝ちです。おめでとうございます。!');
+        } else if(this.isDraw()) {
+          this.states = [
+            [-1,-1,-1],
+            [-1,-1,-1],
+            [-1,-1,-1]
+          ];
+          alert('引き分けです！')
         }
       }
     },
@@ -114,6 +121,18 @@ export default{
       return true;
 
       // return(states[0] != -1 && states[0] == states[1] && states[1] == states[2]);
+    },
+    isDraw: function() {
+      for(let i in this.states) {
+        let row = this.states[i];
+        for(let j in row) {
+          let state = row[j];
+          if(state == -1) {
+            return false;
+          }
+        }
+      }
+    return true;
     }
   },
   created(){
